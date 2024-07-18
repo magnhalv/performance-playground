@@ -1,7 +1,7 @@
 #include <chrono>
 #include <cstdlib>
 #include <cstring>
-#include <immintrin.h> // Header for AVX intrinsics
+#include <immintrin.h>
 #include <iostream>
 #include <mm_malloc.h>
 #include <ostream>
@@ -24,18 +24,15 @@ auto fill_matrix(arr_t *m, int size)
 
 auto naive(arr_t *res, arr_t *mult1, arr_t *mult2, int N)
 {
-    for (int n = 0; n < NUM_TIMES; n++)
+    for (int i = 0; i < N; i++)
     {
-        for (int i = 0; i < N; i++)
+        for (int j = 0; j < N; j++)
         {
-            for (int j = 0; j < N; j++)
+            for (int k = 0; k < N; k++)
             {
-                for (int k = 0; k < N; k++)
-                {
-                    auto m1 = mult1[INDEX(i, k, N)];
-                    auto m2 = mult2[INDEX(k, j, N)];
-                    res[INDEX(i, j, N)] += m1 * m2;
-                }
+                auto m1 = mult1[INDEX(i, k, N)];
+                auto m2 = mult2[INDEX(k, j, N)];
+                res[INDEX(i, j, N)] += m1 * m2;
             }
         }
     }
