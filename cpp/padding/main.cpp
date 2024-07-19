@@ -15,6 +15,8 @@ struct Entry
     arr_t padding[255];
 };
 
+int64_t total = 0;
+
 auto fill_array(std::vector<Entry> &entries, int size)
 {
     entries.resize(size);
@@ -47,11 +49,13 @@ auto add_together(size_t size, int num_times) -> std::chrono::microseconds
         {
             result += (arr1[i].value + arr2[i].value);
         }
+
         auto end = std::chrono::high_resolution_clock::now();
         if (num != 0)
         {
             duration += std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         }
+        total += result;
     }
     return duration / num_times;
 }
@@ -72,4 +76,5 @@ int main(int argc, char *argv[])
         auto duration = add_together(N, 30);
         std::cout << "  N = " << N << ": " << duration.count() << " microseconds." << std::endl;
     }
+    std::cout << "Total " << total << std::endl;
 }

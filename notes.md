@@ -15,12 +15,13 @@
 * Smaller memory footprint leads to faster processing.
 * The order which you access data, can lead to faster processing.
 * If the data is structured sequentually, it is easier to exploit SIMD instructions.
+* Often spikes when reaching different cache sizes (lscpu)
 
 ## Case studies
 
 - [X] Matrix multiplication 
-- [] Padding
-- [] Ordering
+- [X] Padding
+- [X] Alignment and struct sizes
 
 ## Questions:
 - Does the compiler optimize struct order?
