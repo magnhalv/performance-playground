@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Running '" << type << "':" << std::endl;
 
-    int dimensions[] = {64, 128, 256};
+    int dimensions[] = {64, 128, 256, 512};
 
     for (auto N : dimensions)
     {
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
         fill_matrix(mult2, SIZE);
 
         std::chrono::microseconds duration(0);
-        for (int n = 0; n < NUM_TIMES; n++)
+        for (int n = 0; n < NUM_TIMES + 1; n++)
         {
             auto start = std::chrono::high_resolution_clock::now();
             if (type == "block")
@@ -153,7 +153,11 @@ int main(int argc, char *argv[])
                 naive(res, mult1, mult2, N);
             }
             auto end = std::chrono::high_resolution_clock::now();
-            duration += std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+            if (n > 0)
+            {
+                duration += std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+            }
 
             memset(res, 0, sizeof(arr_t) * SIZE);
         }
