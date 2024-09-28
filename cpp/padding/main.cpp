@@ -7,12 +7,10 @@
 
 #include "util.h"
 
-typedef uint32_t arr_t;
-
 struct Entry
 {
-    arr_t value;
-    arr_t padding[0];
+    uint32_t value;
+    uint32_t padding[0];
 };
 
 auto fill_array(Entry *entries, int N) -> std::chrono::microseconds

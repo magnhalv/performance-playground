@@ -9,7 +9,7 @@ parser.add_argument("N", type=int, help="Number of instances to run")
 
 args = parser.parse_args()
 N = args.N
-command = "main.exe"
+command = ".\\build\\main.exe"
 
 start_time = time.time()
 
