@@ -95,9 +95,21 @@ auto generate_lookup_dict(int N) -> std::unordered_map<std::string, int32_t>
     return map;
 }
 
+void warmup(LookupArray &lookup)
+{
+    for (auto key : lookup.keys)
+    {
+        std::cout << key.data() << std::endl;
+    }
+    for (auto value : lookup.values)
+    {
+        std::cout << value << std::endl;
+    }
+}
+
 auto lookup_using_array(LookupArray &lookup_array, std::vector<Key> &keys_to_sum) -> std::chrono::microseconds
 {
-
+    warmup(lookup_array);
     auto start = std::chrono::high_resolution_clock::now();
     int32_t total = 0;
     for (int k = 0; k < keys_to_sum.size(); k++)
@@ -141,10 +153,32 @@ auto lookup_using_array(LookupArray &lookup_array, std::vector<Key> &keys_to_sum
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 }
 
+void warmup(std::unordered_map<std::string, int32_t> &map)
+{
+    // Iterate over the map to "touch" all key-value pairs
+    for (auto &entry : map)
+    {
+        // Access the key and value to ensure they are loaded into the cache
+        volatile int32_t value = entry.second;        // Volatile to prevent compiler optimizations
+        volatile const std::string key = entry.first; // Volatile to prevent compiler optimizations
+        std::cout << entry.first << std::endl;
+    }
+    volatile int32_t accumulator = 0;
+    volatile std::string total = "";
+    for (auto &entry : map)
+    {
+        accumulator = entry.second;
+        total = total + std::string(entry.first.data());
+    }
+    std::cout << accumulator << std::endl;
+    std::cout << total << std::endl;
+}
+
 auto lookup_dict(std::unordered_map<std::string, int32_t> &dict, std::vector<std::string> &keys_to_sum)
     -> std::chrono::microseconds
 {
 
+    warmup(dict);
     auto start = std::chrono::high_resolution_clock::now();
     int32_t total = 0;
     for (const auto &key : keys_to_sum)
