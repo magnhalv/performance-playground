@@ -5,12 +5,12 @@
 #include <ostream>
 #include <stdlib.h>
 
-#include "util.h"
+#include "../util.h"
 
 struct Entry
 {
-    uint32_t value;
-    uint32_t padding[0];
+    uint32_t value; // 4 bytes
+    uint32_t padding[255]; // 60 bytes
 };
 
 auto fill_array(Entry *entries, int N) -> std::chrono::microseconds
@@ -44,7 +44,8 @@ auto sum(const Entry *arr, int N) -> std::chrono::microseconds
 
 int main(int argc, char *argv[])
 {
-    auto N = to_gb(1) / sizeof(Entry);
+    //auto N = to_gb(1) / sizeof(Entry);
+    auto N = 10000000;
     std::cout << "Entry size: " << sizeof(Entry) << " bytes" << std::endl;
     std::cout << "N = " << N << std::endl;
     std::cout << "Total array size: " << format_bytes(N * sizeof(Entry)) << std::endl;
@@ -52,7 +53,8 @@ int main(int argc, char *argv[])
     Entry *arr = static_cast<Entry *>(malloc(N * sizeof(Entry)));
 
     auto duration = fill_array(arr, N);
-    std::cout << "Fill (cold): " << format_time(duration.count()) << std::endl;
+    //std::cout << "Fill (cold): " << format_time(duration.count()) << std::endl;
+    flush_cache();
     duration = sum(arr, N);
     std::cout << "Sum (warm): " << format_time(duration.count()) << std::endl;
     std::cout << result << std::endl;

@@ -1,8 +1,8 @@
 
-function createEntry(value) {
+function createDictEntry(value) {
   return {
   value: value,
-  a1: 1, a2: 1, a3: 1, a4: 1, a5: 1, a6: 1, a7: 1, a8: 1, a9: 1, a10: 1,
+  //a1: 1, a2: 1, a3: 1, a4: 1, a5: 1, a6: 1, a7: 1, a8: 1, a9: 1, a10: 1,
   //a11: 1, a12: 1, a13: 1, a14: 1, a15: 1, a16: 1, a17: 1, a18: 1, a19: 1, a20: 1,
   //a21: 1, a22: 1, a23: 1, a24: 1, a25: 1, a26: 1, a27: 1, a28: 1, a29: 1, a30: 1,
   //a31: 1, a32: 1, a33: 1, a34: 1, a35: 1, a36: 1, a37: 1, a38: 1, a39: 1, a40: 1,
@@ -31,14 +31,15 @@ function createEntry(value) {
   };
 }
 
-function createArrays(value, padding, size) {
- return new Array(size).fill(new Array(padding).fill(value));
+function createArrays(value, size) {
+  const size_of_dict = Object.keys(createDictEntry(1)).length;
+  return new Array(size).fill(new Array(size_of_dict).fill(value));
 }
 
 function createArrayOfDicts(size) {
   const dicts = [];
   for (let i = 0; i < size; i++) {
-    dicts.push(createEntry(5));
+    dicts.push(createDictEntry(5));
   }
   return dicts;
 }
@@ -60,9 +61,9 @@ function addDictsTogether(size, numTimes) {
   return end - start;
 }
 
-function addArraysTogether(size, padding, numTimes) {
-  const arr_of_arr_1 = createArrays(1, padding, size);
-  const arr_of_arr_2 = createArrays(2, padding, size);
+function addArraysTogether(size, numTimes) {
+  const arr_of_arr_1 = createArrays(1, size);
+  const arr_of_arr_2 = createArrays(2, size);
 
   let result = 0;
 
@@ -84,10 +85,9 @@ function main() {
   const dict_duration = addDictsTogether(N, 30);
   console.log(`  N = ${N}: ${dict_duration.toFixed(2) * 1000} microseconds.`);
 
-  const array_size = 11;
-  console.log(`Array: `);
-  const arr_duration = addArraysTogether(N, array_size, 30);
-  console.log(`  N = ${N}: ${arr_duration.toFixed(2) * 1000} microseconds.`);
+  //console.log(`Array: `);
+  //const arr_duration = addArraysTogether(N, 30);
+  //console.log(`  N = ${N}: ${arr_duration.toFixed(2) * 1000} microseconds.`);
 }
 
 main();
