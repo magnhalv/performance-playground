@@ -4,14 +4,12 @@ import argparse
 from io import StringIO
 
 # Set up argument parser
-parser = argparse.ArgumentParser(
-    description="Run N instances of ./main.exe async.")
+parser = argparse.ArgumentParser(description="Run N instances of ./main.exe async.")
 parser.add_argument("N", type=int, help="Number of instances to run")
 
 args = parser.parse_args()
 N = args.N
-command = ".\\build\\main.exe working_set"
-
+command = ".\\build\\main.exe"
 
 start_time = time.time()
 
@@ -20,11 +18,8 @@ outputs = []
 
 # Start N processes asynchronously and redirect their output to StringIO buffers
 processes = []
-print("Executing commands:")
 for _ in range(N):
-    print(f"  {command}")
-    proc = subprocess.Popen(
-        command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    proc = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     processes.append(proc)
 
 # Wait for all processes to finish and collect their output

@@ -3,13 +3,14 @@
 #include <cstring>
 #include <immintrin.h>
 #include <iostream>
-#include <mm_malloc.h>
 #include <ostream>
 #include <string>
+
+#include "../util.h"
 //
 #define INDEX(i, j, N) ((i) * (N) + (j))
 
-constexpr int NUM_TIMES = 20;
+constexpr int NUM_TIMES = 1;
 
 typedef double arr_t;
 constexpr int SM = (64 / sizeof(arr_t));
@@ -101,13 +102,8 @@ auto alloc(size_t size) -> arr_t *
 {
     void *ptr = nullptr;
     size_t alignment = 64;
-    int result = posix_memalign(&ptr, alignment, size);
+    ptr = _aligned_malloc(size, alignment);
 
-    if (result != 0)
-    {
-        std::cout << "Failed to align memory!" << std::endl;
-        exit(1);
-    }
 
     return static_cast<arr_t *>(ptr);
 }
@@ -123,12 +119,12 @@ int main(int argc, char *argv[])
 
     std::cout << "Running '" << type << "':" << std::endl;
 
-    int dimensions[] = {64, 128, 256, 512};
+    int dimensions[] = {512};
 
     for (auto N : dimensions)
     {
         const auto SIZE = N * N;
-
+        std::cout << "Size of matrix: " << format_bytes(sizeof(arr_t) * SIZE) << std::endl;
         arr_t *mult1 = alloc(sizeof(arr_t) * SIZE);
         arr_t *mult2 = alloc(sizeof(arr_t) * SIZE);
         arr_t *res = alloc(sizeof(arr_t) * SIZE);
@@ -161,10 +157,6 @@ int main(int argc, char *argv[])
 
             memset(res, 0, sizeof(arr_t) * SIZE);
         }
-        std::cout << "  N = " << N << ": " << duration.count() / NUM_TIMES << " microseconds." << std::endl;
-
-        free(mult1);
-        free(mult2);
-        free(res);
+        std::cout << "  N = " << N << ": " << format_time(duration.count() / NUM_TIMES) << std::endl;
     }
 }

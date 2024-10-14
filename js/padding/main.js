@@ -6,7 +6,7 @@ function createDictEntry(value) {
   a11: 1, a12: 1, a13: 1, a14: 1, a15: 1, a16: 1, a17: 1, a18: 1, a19: 1, a20: 1,
   a21: 1, a22: 1, a23: 1, a24: 1, a25: 1, a26: 1, a27: 1, a28: 1, a29: 1, a30: 1,
   a31: 1, a32: 1, a33: 1, a34: 1, a35: 1, a36: 1, a37: 1, a38: 1, a39: 1, a40: 1,
-  //a41: 1, a42: 1, a43: 1, a44: 1, a45: 1, a46: 1, a47: 1, a48: 1, a49: 1, a50: 1,
+  a41: 1, a42: 1, a43: 1, a44: 1, a45: 1, a46: 1, a47: 1, a48: 1, a49: 1, a50: 1,
   //a51: 1, a52: 1, a53: 1, a54: 1, a55: 1, a56: 1, a57: 1, a58: 1, a59: 1, a60: 1,
   //a61: 1, a62: 1, a63: 1, a64: 1, a65: 1, a66: 1, a67: 1, a68: 1, a69: 1, a70: 1,
   //a71: 1, a72: 1, a73: 1, a74: 1, a75: 1, a76: 1, a77: 1, a78: 1, a79: 1, a80: 1,
@@ -81,9 +81,9 @@ function addArraysTogether(size, numTimes) {
 function main() {
   const N = Math.pow(2, 18);
 
-  console.log(`Dict: `);
-  const dict_duration = addDictsTogether(N, 30);
-  console.log(`  N = ${N}: ${dict_duration.toFixed(2) * 1000} microseconds.`);
+  //console.log(`Dict: `);
+  //const dict_duration = addDictsTogether(N, 30);
+  //console.log(`  N = ${N}: ${dict_duration.toFixed(2) * 1000} microseconds.`);
 
   console.log(`Array: `);
   const arr_duration = addArraysTogether(N, 30);

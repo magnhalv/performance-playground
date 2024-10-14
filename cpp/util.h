@@ -105,3 +105,50 @@ inline std::string format_time(uint64_t microseconds)
     }
     return oss.str();
 }
+
+
+// SIMD-optimized sum function using AVX2
+/*
+
+#include <immintrin.h> // For AVX2 intrinsics
+auto simd_sum(const Entry *arr, int N) -> std::chrono::microseconds
+{
+    result = 0;
+    auto start = std::chrono::high_resolution_clock::now();
+
+    const int simdWidth = 8;
+    __m256i resultVec = _mm256_setzero_si256(); 
+
+    int i = 0;
+    for (; i <= N - simdWidth; i += simdWidth)
+    {
+        // Load 8 uint32_t values into a SIMD register
+        __m256i valuesVec = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(&arr[i].value));
+
+        // Add them to the result
+        resultVec = _mm256_add_epi32(resultVec, valuesVec);
+    }
+
+    uint32_t resultArray[8];
+    _mm256_storeu_si256(reinterpret_cast<__m256i*>(resultArray), resultVec);
+
+    uint64_t simdResult = 0;
+    for (int j = 0; j < simdWidth; ++j) {
+        simdResult += resultArray[j];
+    }
+
+    for (; i < N; ++i) {
+        simdResult += arr[i].value;
+    }
+
+    result += simdResult;
+
+    auto end = std::chrono::high_resolution_clock::now();
+    return std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+}
+
+    flush_cache();
+    duration = simd_sum(arr, N);
+    std::cout << "Sum: " << format_time(duration.count()) << std::endl;
+    std::cout << result << std::endl;
+*/
