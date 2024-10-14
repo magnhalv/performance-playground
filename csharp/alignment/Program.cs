@@ -58,11 +58,11 @@ class Program
         Console.WriteLine($"BadAlignment size: {Marshal.SizeOf<BadAlignment>()}");
 
         const int NUM_TIMES = 30;
-        const int NUM_ITERATIONS = 50;
+        const int NUM_ITERATIONS = 1;
+        int N = 3070000;
 
-        for (int n = 1; n < NUM_ITERATIONS; n++)
+        for (int n = 0; n < NUM_ITERATIONS; n++)
         {
-            int N = 30700 * n;
             BadAlignment[] bad1 = new BadAlignment[N];
             BadAlignment[] bad2 = new BadAlignment[N];
 
@@ -93,9 +93,8 @@ class Program
         }
 
         Console.WriteLine($"GoodAlignment size: {Marshal.SizeOf<GoodAlignment>()}");
-        for (int n = 1; n < NUM_ITERATIONS; n++)
+        for (int n = 0; n < NUM_ITERATIONS; n++)
         {
-            int N = 30700 * n;
             GoodAlignment[] good1 = new GoodAlignment[N];
             GoodAlignment[] good2 = new GoodAlignment[N];
 
@@ -126,9 +125,8 @@ class Program
         }
 
         Console.WriteLine($"MidAlignment size: {Marshal.SizeOf<MidAlignment>()}");
-        for (int n = 1; n < NUM_ITERATIONS; n++)
+        for (int n = 0; n < NUM_ITERATIONS; n++)
         {
-            int N = 30700 * n;
             MidAlignment[] mid1 = new MidAlignment[N];
             MidAlignment[] mid2 = new MidAlignment[N];
 
